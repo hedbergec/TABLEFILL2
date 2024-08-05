@@ -10,12 +10,24 @@ program tablefill
 		[restore] /// lookfor and restore old estimates
 		titlecell(string) title(string) ///
 		[logfile(string)] ///put logs here
-		[raw]
+		[raw] [mi]
 
 	if "`logfile'" != "" {
 	    log close _all
 	    log using "`logfile'", replace text
 		*log off
+	}
+
+	if "`mi'" == "mi" {
+		quietly : mi set
+		if r(M) != 0 {
+			local miprefix "mi estimate : "
+		}
+		else {
+			di as error "Data are not MI ready"
+			exit 
+		}
+		
 	}
 
 	set type double
@@ -277,7 +289,7 @@ program tablefill
 							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`rowvarid'' < . `if_postfix'
-								`svyprefix' proportion `d_header_var_`rowvarid'' `if_postfix'
+								`miprefix' `svyprefix'  proportion `d_header_var_`rowvarid'' `if_postfix'
 								estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
 							}
 						}
@@ -285,7 +297,7 @@ program tablefill
 							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`colvarid'' < . `if_postfix'
-								`svyprefix' proportion `d_header_var_`colvarid'' `if_postfix'
+								`miprefix' `svyprefix'  proportion `d_header_var_`colvarid'' `if_postfix'
 								estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster", replace
 							}
 							
@@ -296,7 +308,7 @@ program tablefill
 							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`colvarid'' < . & `d_header_var_`rowvarid'' < . `if_postfix'
-								`svyprefix' proportion `d_header_var_`rowvarid'' `if_postfix', over(`d_header_var_`colvarid'')
+								`miprefix' `svyprefix'  proportion `d_header_var_`rowvarid'' `if_postfix', over(`d_header_var_`colvarid'')
 								estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster", replace
 							}
 							
@@ -305,7 +317,7 @@ program tablefill
 							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`colvarid'' < . & `d_header_var_`rowvarid'' < . `if_postfix'
-								`svyprefix' proportion `d_header_var_`colvarid'' `if_postfix', over(`d_header_var_`rowvarid'')
+								`miprefix' `svyprefix'  proportion `d_header_var_`colvarid'' `if_postfix', over(`d_header_var_`rowvarid'')
 								estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
 							}
 						}
@@ -316,7 +328,7 @@ program tablefill
 						capture confirm file "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
 						if _rc != 0 | "`restore'" == "" {
 							quietly : replace `run_use' = `stat_var_`j'' < . & `d_header_var_`rowvarid'' < . `if_postfix'
-							`svyprefix' `stat_`j'' `stat_var_`j'' `if_postfix' , over(`d_header_var_`rowvarid'') 
+							`miprefix' `svyprefix'  `stat_`j'' `stat_var_`j'' `if_postfix' , over(`d_header_var_`rowvarid'') 
 							estimates save "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
 						}
 						
@@ -325,7 +337,7 @@ program tablefill
 						capture confirm file "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster"
 						if _rc != 0 | "`restore'" == "" {
 							quietly : replace `run_use' = `stat_var_`j'' < . & `d_header_var_`rowvarid'' < . & `d_header_var_`colvarid'' < . `if_postfix'
-							`svyprefix' `stat_`j'' `stat_var_`j'' `if_postfix' , over(`d_header_var_`rowvarid'' `d_header_var_`colvarid'') 
+							`miprefix' `svyprefix'  `stat_`j'' `stat_var_`j'' `if_postfix' , over(`d_header_var_`rowvarid'' `d_header_var_`colvarid'') 
 							estimates save "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster", replace
 						}
 					}
