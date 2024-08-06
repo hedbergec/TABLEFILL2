@@ -1,10 +1,25 @@
 program define tablefill_parse_estimates, rclass
     version 18 
     syntax using/, [factor(string)] [bformat(string)] ///
-        [seformat(string)] [natest(numlist)] stat(string) [raw]
+        [seformat(string)] [natest(numlist)] stat(string) [raw] 
     clear
     estimates use "`using'"
-    matrix b = e(b)'
+    capture confirm existence `e(b)'
+    if _rc == 0 {
+        matrix b = e(b)'
+    } 
+    capture confirm existence `e(V)'
+    if _rc == 0 {
+        matrix V = e(V)
+    }
+    capture confirm existence `e(b_mi)'
+    if _rc == 0 {
+        matrix b = e(b_mi)'
+    } 
+    capture confirm existence `e(V)'
+    if _rc == 0 {
+        matrix V = e(V_mi)
+    }
     local obs = rowsof(b)
     local expressions : rownames b
     set obs `obs'
@@ -18,7 +33,7 @@ program define tablefill_parse_estimates, rclass
     rename b1 point
     gen point_factor = point  `factor'
     tostring point_factor , force gen(point_present) format(`bformat')
-    matrix V = e(V)
+    
     gen double se = .
     forvalues i = 1/`obs' {
         replace se = sqrt(V[`i',`i']) if _n == `i'
