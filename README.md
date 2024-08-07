@@ -1,0 +1,1 @@
+The `Stata` command is stored in the `tablefill` folder. Place that where you put your user-written commands. Use `adopath` to direct `Stata` to it. The `HTML` file serves as documentation for now while I work up a `Stata` help file. 
