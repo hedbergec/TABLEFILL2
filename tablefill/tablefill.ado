@@ -27,6 +27,10 @@ program tablefill
 
 	marksample touse
 
+	di as text "Starting TABLESHELL procedures"
+
+	di as text _newline "checking data headers"
+
 	local k = 0
 	local max_number_levels = 0
 	foreach v in `domainvars' { //get and clean all variable labels and values and value labels
@@ -49,6 +53,7 @@ program tablefill
 	local level_format : display "%0" strlen("`max_number_levels'") ".0f"
 
 	***** Parse stat and shell commands *****
+	di _newline "reading and analyzing `tableshell'"
 	preserve
 	quietly : import excel "`tableshell'", allstring clear
 	***** Parse stat commands *****
@@ -264,6 +269,8 @@ program tablefill
 
 	**** END SHELL and Stat Command Parsing 
 
+	di _newline "checking data settings..." _continue
+
 	**** Build estimations file ****
 
 	tempvar run_use
@@ -272,7 +279,7 @@ program tablefill
 	*check for mi settings
 	quietly : mi query
 	if r(M) != 0 {
-		di as text r(M) " multiple imputations detected"
+		di as text r(M) " multiple imputations detected..." _continue
 		local micheck = "mi "
 	}
 	*check for survey settings
@@ -280,7 +287,7 @@ program tablefill
 	local svysettings = r(settings)
 
 	if r(settings) != ", clear" {
-		di as text "`micheck'survey settings detected"
+		di as text "`micheck'survey settings detected..." 
 		local svyprefix "svy, subpop(if `touse' == 1) : "
 		local if_postfix ""
 		if "`micheck'" != "" {
@@ -292,7 +299,7 @@ program tablefill
 		local svyprefix ""
 		local if_postfix "if `touse' == 1"
 	}
-
+	di _newline 
 	forvalues j = 1/`number_stats' {
 		if "`restore'" == "" di _newline "running `stat_`j'' commands"
 		foreach rowspec in `domain_rows' {
@@ -531,7 +538,7 @@ program tablefill
 	}
 	quietly : `noisily' putexcel `titlecell' = `"`title'"'
 
-	di "`savefolder'/`populate_copy' populated" 
+	di _newline "`savefolder'/`populate_copy' populated" 
 	
 	restore
 

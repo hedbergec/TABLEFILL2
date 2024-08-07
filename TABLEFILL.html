@@ -7502,8 +7502,8 @@ a.anchor-link {
 <p>The <em>statspec</em> is a series of stat commands seperated by a single <code>|</code>. A single stat command has the following syntax</p>
 <p>[`total|mean|proportion] [`<em>var</em>]<code>, [row|col] point(</code><em>pointcols</em><code>) [se(</code><em>secols</em><code>)] [note(</code><em>notecols</em><code>)] factor(</code><em>factorexpr</em><code>) bformat(</code><em>bfmt</em><code>) seformat(</code><em>sefmt</em><code>)</code></p>
 <p>where you can have either totals or means of a single variable <em>var</em> or a porportion, and the options detail which columns to put the point estimate, standard errors, and notes for unreliable estiamtes. The estimates and standard errors can be altered by a <em>factorexpr</em> such as <code>*100</code> for changing proportions to percents or <code>*0.001</code> for changing raw counts to thousands. After this factor is applied, the results are formatted into strings using stata format expression for the point estimates (<em>bfmt</em>) and standard errors (<em>sefmt</em>).</p>
-<h1 id="Descriptive-Example">Descriptive Example<a class="anchor-link" href="#Descriptive-Example">¶</a></h1><p>Let's run totals and column percentages to populate this table saved in <code>tabn209_21_SASS_simple.xlsx</code></p>
-<p><img alt="alt text" src="ex1.png" title="Example Excel File"/></p>
+<h1 id="Descriptive-Example">Descriptive Example<a class="anchor-link" href="#Descriptive-Example">¶</a></h1><p>Let's run totals and column percentages to populate this table saved in <code>shell.xlsx</code></p>
+<p><img alt="alt text" src="pics/ex1.png" title="Example Excel File"/></p>
 <p>The data have been cleaned as are stored in <code>input_data.dta</code></p>
 <h2 id="Step-1-Load-the-Program">Step 1 Load the Program<a class="anchor-link" href="#Step-1-Load-the-Program">¶</a></h2><p>First, we need to load the tablefill program. Utill this is ready and sent to SSC, you need to point <code>Stata</code> to the right directory. Here, the program folder is saved in the working directory, so we use <code>adopath</code> to add the folder</p>
 </div>
@@ -7514,7 +7514,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">adopath</span> <span class="o">+</span> <span class="s">"./tablefill"</span>
@@ -7531,6 +7531,15 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>  [1]  (BASE)      "/Applications/Stata/ado/base/"
+  [2]  (SITE)      "/Applications/Stata/ado/site/"
+  [3]              "."
+  [4]  (PERSONAL)  "/Users/hedbergec/Documents/Stata/ado/personal/"
+  [5]  (PLUS)      "/Users/hedbergec/Library/Application Support/Stata/ado/plus/
+&gt; "
+  [6]  (OLDPLACE)  "~/ado/"
+  [7]              "/opt/anaconda3/lib/python3.12/site-packages/stata_kernel/ado
+&gt; "
+  [8]              "./tablefill"
   [2]  (SITE)      "/Applications/Stata/ado/site/"
   [3]              "."
   [4]  (PERSONAL)  "/Users/hedbergec/Documents/Stata/ado/personal/"
@@ -7561,7 +7570,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">use</span> <span class="s">"input_data.dta"</span>,<span class="k"> clear</span>
@@ -7587,7 +7596,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">codebook</span> all
@@ -7605,6 +7614,10 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
 --------------------------------------------------------------------------------
+all                                                                        Total
+--------------------------------------------------------------------------------
+
+                  Type: Numeric (double)
 all                                                                        Total
 --------------------------------------------------------------------------------
 
@@ -7637,7 +7650,7 @@ all                                                                        Total
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">set more</span> off
@@ -7660,6 +7673,13 @@ all                                                                        Total
 
 
 --------------------------------------------------------------------------------
+T0356                                                                        Sex
+--------------------------------------------------------------------------------
+
+                  Type: Numeric (byte)
+                 Label: sex
+
+                 Range: [1,2]                         Units: 1
 T0356                                                                        Sex
 --------------------------------------------------------------------------------
 
@@ -7900,11 +7920,11 @@ S0256                                                          Teacher vacancies
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"tabn209_21_SASS_simple.xlsx"</span>, <span class="cs">/// the shell</span>
-    sheet(<span class="s">"Digest 2000 Table 209.21"</span>) <span class="cs">/// the sheet</span>
+<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"shell.xlsx"</span>, <span class="cs">/// the shell</span>
+    sheet(<span class="s">"Table 1"</span>) <span class="cs">/// the sheet</span>
     statistics( <span class="cs">/// describe what statistics to estimate and columns</span>
 <span class="k">    total cons</span>, point(B D F) <span class="cs">///</span>
 <span class="k">        factor</span>(<span class="o">*</span><span class="m">0.001</span>) bformat(<span class="nx">%6.0fc</span>)  <span class="cs">///</span>
@@ -7921,7 +7941,7 @@ S0256                                                          Teacher vacancies
     savefolder(<span class="s">"Results"</span>)   <span class="cs">///</span>
     raw <span class="cs">/// don't supress results based on cell counts or high SEs</span>
     titlecell(A1) <span class="cs">///</span>
-    title(<span class="s">"Table 209.21. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
+    title(<span class="s">"Table 1. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
 </pre></div>
 </div>
 </div>
@@ -7934,11 +7954,22 @@ S0256                                                          Teacher vacancies
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
+<pre>Starting TABLESHELL procedures
+
+checking data headers
+
+checking data headers
+
+reading and analyzing shell.xlsx
+
+checking data settings...
+
+
 running total commands
 
 running proportion commands
-Results/tabn209_21_SASS_simple_populated.xlsx populated
+
+Results/shell_populated.xlsx populated
 </pre>
 </div>
 </div>
@@ -7952,7 +7983,7 @@ Results/tabn209_21_SASS_simple_populated.xlsx populated
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>In the Results folder is the populated Excel file</p>
-<p><img alt="alt text" src="ex2.png" title="Populated Excel File"/></p>
+<p><img alt="alt text" src="pics/ex2.png" title="Populated Excel File"/></p>
 </div>
 </div>
 </div>
@@ -7965,7 +7996,7 @@ Results/tabn209_21_SASS_simple_populated.xlsx populated
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Survey-Estimation-Example">Survey Estimation Example<a class="anchor-link" href="#Survey-Estimation-Example">¶</a></h1><p>The primary purpose of <code>tablefill</code> is to allow for fast estimation of survey tables.</p>
 <p>A more complex table would use complex survey settings to estimate weighted means and totals and associated standard errors.</p>
-<p><img alt="alt text" src="ex3.png" title="Survey Excel File"/></p>
+<p><img alt="alt text" src="pics/ex3.png" title="Survey Excel File"/></p>
 <p>The steps are largely the same, except we first must enter the survey settings. As <code>tablefill</code> uses <code>Stata</code>'s native survey routines, you can use <code>Stata</code>'s native survey setting framework. For example</p>
 </div>
 </div>
@@ -7975,7 +8006,7 @@ Results/tabn209_21_SASS_simple_populated.xlsx populated
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">svyset</span> [pw = TFNLWGT] ,<span class="k"> vce</span>(brr) brrweight(TREPWT<span class="o">*</span>)
@@ -8000,6 +8031,13 @@ Sampling weights: TFNLWGT
         Strata 1: &lt;one&gt;
  Sampling unit 1: &lt;observations&gt;
            FPC 1: &lt;zero&gt;
+             VCE: brr
+             MSE: off
+     BRR weights: TREPWT1 .. TREPWT9
+     Single unit: missing
+        Strata 1: &lt;one&gt;
+ Sampling unit 1: &lt;observations&gt;
+           FPC 1: &lt;zero&gt;
 </pre>
 </div>
 </div>
@@ -8012,7 +8050,7 @@ Sampling weights: TFNLWGT
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We then use a similar <code>tablefill</code> command for a different shell, <code>tabn209_21_SASS.xlsx</code>, adding columns for standard errors and notes. As all results files which are created are keyed to the shell filename, we can use the same <code>Results</code> folder.</p>
+<p>We then use a similar <code>tablefill</code> command for a different shell, <code>shell_SVY.xlsx</code>, adding columns for standard errors and notes. As all results files which are created are keyed to the shell filename, we can use the same <code>Results</code> folder.</p>
 </div>
 </div>
 </div>
@@ -8021,11 +8059,11 @@ Sampling weights: TFNLWGT
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"tabn209_21_SASS.xlsx"</span>, <span class="cs">/// the shell</span>
-    sheet(<span class="s">"Digest 2000 Table 209.21"</span>) <span class="cs">/// the sheet</span>
+<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"shell_SVY.xlsx"</span>, <span class="cs">/// the shell</span>
+    sheet(<span class="s">"Table 2"</span>) <span class="cs">/// the sheet</span>
     statistics( <span class="cs">/// describe what statistics to estimate and columns</span>
 <span class="k">    total cons</span>, point(B E H)<span class="k"> note</span>(C F I)<span class="k"> se</span>(D G J) <span class="cs">///</span>
 <span class="k">        factor</span>(<span class="o">*</span><span class="m">0.001</span>) bformat(<span class="nx">%6.0fc</span>) seformat(<span class="nx">%6.1f</span>) <span class="cs">///</span>
@@ -8041,7 +8079,7 @@ Sampling weights: TFNLWGT
     ) <span class="cs">///</span>
     savefolder(<span class="s">"Results"</span>)   <span class="cs">///</span>
     titlecell(A1) <span class="cs">///</span>
-    title(<span class="s">"Table 209.21. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
+    title(<span class="s">"Table 2. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
 </pre></div>
 </div>
 </div>
@@ -8054,12 +8092,23 @@ Sampling weights: TFNLWGT
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>survey settings detected
+<pre>Starting TABLESHELL procedures
+
+checking data headers
+
+checking data headers
+
+reading and analyzing shell_SVY.xlsx
+
+checking data settings...survey settings detected...
+
+
 
 running total commands
 
 running proportion commands
-Results/tabn209_21_SASS_populated.xlsx populated
+
+Results/shell_SVY_populated.xlsx populated
 </pre>
 </div>
 </div>
@@ -8073,7 +8122,7 @@ Results/tabn209_21_SASS_populated.xlsx populated
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Which saved the populated table in the <code>Results</code> folder</p>
-<p><img alt="alt text" src="ex4.png" title="Populated Survey Excel File"/></p>
+<p><img alt="alt text" src="pics/ex4.png" title="Populated Survey Excel File"/></p>
 </div>
 </div>
 </div>
@@ -8094,7 +8143,7 @@ Results/tabn209_21_SASS_populated.xlsx populated
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">svyset</span>,<span class="k"> clear</span>
@@ -8128,6 +8177,12 @@ mi<span class="k"> impute</span> chained (ologit, augment) TOTEXPER_rc_miss (mlo
 
 
 Conditional models:
+     T0104_rc_miss: mlogit T0104_rc_miss i.TOTEXPER_rc_miss i.Highest_degree
+                     i.T0356 i.RACETH_T i.AGE_T i.URBANIC i.S0285_S0287
+                     i.REGION i.S0256 i.TEALEV2 , augment
+    TOTEXPER_rc_~s: ologit TOTEXPER_rc_miss i.T0104_rc_miss i.Highest_degree
+                     i.T0356 i.RACETH_T i.AGE_T i.URBANIC i.S0285_S0287
+                     i.REGION i.S0256 i.TEALEV2 , augment
      T0104_rc_miss: mlogit T0104_rc_miss i.TOTEXPER_rc_miss i.Highest_degree
                      i.T0356 i.RACETH_T i.AGE_T i.URBANIC i.S0285_S0287
                      i.REGION i.S0256 i.TEALEV2 , augment
@@ -8178,11 +8233,11 @@ Initialization: monotone                     Iterations =       50
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"tabn209_21_SASS_simple_MI.xlsx"</span>, <span class="cs">/// the shell</span>
-    sheet(<span class="s">"Digest 2000 Table 209.21"</span>) <span class="cs">/// the sheet</span>
+<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"shell_MI.xlsx"</span>, <span class="cs">/// the shell</span>
+    sheet(<span class="s">"Table 3"</span>) <span class="cs">/// the sheet</span>
     statistics( <span class="cs">/// describe what statistics to estimate and columns</span>
 <span class="k">    total cons</span>, point(B D F) <span class="cs">///</span>
 <span class="k">        factor</span>(<span class="o">*</span><span class="m">0.001</span>) bformat(<span class="nx">%6.0fc</span>)  <span class="cs">///</span>
@@ -8199,7 +8254,7 @@ Initialization: monotone                     Iterations =       50
     savefolder(<span class="s">"Results"</span>)   <span class="cs">///</span>
     raw <span class="cs">/// don't supress results based on cell counts or high SEs</span>
     titlecell(A1) <span class="cs">///</span>
-    title(<span class="s">"Table 209.21. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
+    title(<span class="s">"Table 3. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
 </pre></div>
 </div>
 </div>
@@ -8212,12 +8267,22 @@ Initialization: monotone                     Iterations =       50
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>5 multiple imputations detected
+<pre>Starting TABLESHELL procedures
+
+checking data headers
+
+checking data headers
+
+reading and analyzing shell_MI.xlsx
+
+checking data settings...5 multiple imputations detected...
+
 
 running total commands
 
 running proportion commands
-Results/tabn209_21_SASS_simple_MI_populated.xlsx populated
+
+Results/shell_MI_populated.xlsx populated
 </pre>
 </div>
 </div>
@@ -8231,39 +8296,20 @@ Results/tabn209_21_SASS_simple_MI_populated.xlsx populated
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Which produces a table like this</p>
-<p><img alt="alt text" src="ex5.png" title="Populated Excel File"/></p>
+<p><img alt="alt text" src="pics/ex6.png" title="Populated Excel File"/></p>
 <p>Next, I <code>mi svyset</code> the data since we have both multiple imputations and survey settings (note that you cannot use replicate survey estimation methods with multiple-imputed data, so typically we would also specify a PSU and Stata variable).</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f7559286">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2e9c5031">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-stata"><pre><span></span>mi<span class="k"> svyset</span> [pw = TFNLWGT] 
-
-tablefill using <span class="s">"tabn209_21_SASS_SVYMI.xlsx"</span>, <span class="cs">/// the shell</span>
-    sheet(<span class="s">"Digest 2000 Table 209.21"</span>) <span class="cs">/// the sheet</span>
-    statistics( <span class="cs">/// describe what statistics to estimate and columns</span>
-<span class="k">    total cons</span>, point(B E H)<span class="k"> note</span>(C F I)<span class="k"> se</span>(D G J) <span class="cs">///</span>
-<span class="k">        factor</span>(<span class="o">*</span><span class="m">0.001</span>) bformat(<span class="nx">%6.0fc</span>) seformat(<span class="nx">%6.1f</span>) <span class="cs">///</span>
-        | <span class="cs">/// pipe for antoher statistic</span>
-<span class="k">    proportion</span>, col p(K N Q)<span class="k"> note</span>(L O R)<span class="k"> se</span>(M P S) <span class="cs">///</span>
-<span class="k">        factor</span>(<span class="o">*</span><span class="m">100</span>) bformat(<span class="nx">%3.0f</span>) seformat(<span class="nx">%3.1f</span>) <span class="cs">///</span>
-    ) <span class="cs">///</span>
-    domainvars( <span class="cs">///</span>
-        all <span class="cs">///</span>
-        T0356 RACETH_T AGE_T Highest_degree <span class="cs">///</span>
-        TOTEXPER_rc_miss T0104_rc_miss URBANIC TEALEV2 <span class="cs">///</span>
-        secondary elementary S0285_S0287 REGION S0256 <span class="cs">///</span>
-    ) <span class="cs">///</span>
-    savefolder(<span class="s">"Results"</span>)   <span class="cs">///</span>
-    titlecell(A1) <span class="cs">///</span>
-    title(<span class="s">"Table 209.21. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
+<div class="highlight hl-stata"><pre><span></span>mi<span class="k"> svyset</span> [pw = TFNLWGT]
 </pre></div>
 </div>
 </div>
@@ -8277,21 +8323,92 @@ tablefill using <span class="s">"tabn209_21_SASS_SVYMI.xlsx"</span>, <span class
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
-
 Sampling weights: TFNLWGT
              VCE: linearized
      Single unit: missing
         Strata 1: &lt;one&gt;
  Sampling unit 1: &lt;observations&gt;
            FPC 1: &lt;zero&gt;
+             VCE: linearized
+     Single unit: missing
+        Strata 1: &lt;one&gt;
+ Sampling unit 1: &lt;observations&gt;
+           FPC 1: &lt;zero&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=65cf1cfe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The shell is</p>
+<p><img alt="alt text" src="pics/ex7.png" title="Populated Excel File"/></p>
+<p>and the command is</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f7559286">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-stata"><pre><span></span>tablefill using <span class="s">"shell_SVY_MI.xlsx"</span>, <span class="cs">/// the shell</span>
+    sheet(<span class="s">"Table 4"</span>) <span class="cs">/// the sheet</span>
+    statistics( <span class="cs">/// describe what statistics to estimate and columns</span>
+<span class="k">    total cons</span>, point(B E H)<span class="k"> note</span>(C F I)<span class="k"> se</span>(D G J) <span class="cs">///</span>
+<span class="k">        factor</span>(<span class="o">*</span><span class="m">0.001</span>) bformat(<span class="nx">%6.0fc</span>) seformat(<span class="nx">%6.1f</span>) <span class="cs">///</span>
+        | <span class="cs">/// pipe for antoher statistic</span>
+<span class="k">    proportion</span>, col p(K N Q)<span class="k"> note</span>(L O R)<span class="k"> se</span>(M P S) <span class="cs">///</span>
+<span class="k">        factor</span>(<span class="o">*</span><span class="m">100</span>) bformat(<span class="nx">%3.0f</span>) seformat(<span class="nx">%3.1f</span>) <span class="cs">///</span>
+    ) <span class="cs">///</span>
+    domainvars( <span class="cs">///</span>
+        all <span class="cs">///</span>
+        T0356 RACETH_T AGE_T Highest_degree <span class="cs">///</span>
+        TOTEXPER_rc_miss T0104_rc_miss URBANIC TEALEV2 <span class="cs">///</span>
+        secondary elementary S0285_S0287 REGION S0256 <span class="cs">///</span>
+    ) <span class="cs">///</span>
+    raw <span class="cs">///</span>
+    savefolder(<span class="s">"Results"</span>)   <span class="cs">///</span>
+    titlecell(A1)  <span class="cs">///</span>
+    title(<span class="s">"Table 4. Number and percentage distribution of teachers in traditional public elementary and secondary schools, by instructional level and selected teacher and school characteristics: School year 1999-2000"</span>)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Starting TABLESHELL procedures
 
-5 multiple imputations detected
-mi survey settings detected
+checking data headers
+
+checking data headers
+
+reading and analyzing shell_SVY_MI.xlsx
+
+checking data settings...5 multiple imputations detected...mi survey settings de
+&gt; tected...
+
+
 
 running total commands
 
 running proportion commands
-Results/tabn209_21_SASS_SVYMI_populated.xlsx populated
+
+Results/shell_SVY_MI_populated.xlsx populated
 </pre>
 </div>
 </div>
@@ -8305,7 +8422,7 @@ Results/tabn209_21_SASS_SVYMI_populated.xlsx populated
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Which produces a table like this</p>
-<p><img alt="alt text" src="ex6.png" title="Populated Excel File"/></p>
+<p><img alt="alt text" src="pics/ex8.png" title="Populated Excel File"/></p>
 </div>
 </div>
 </div>
@@ -8325,7 +8442,7 @@ Results/tabn209_21_SASS_SVYMI_populated.xlsx populated
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-stata"><pre><span></span><span class="k">ls</span> Results<span class="o">/</span>, wide
@@ -8342,230 +8459,287 @@ Results/tabn209_21_SASS_SVYMI_populated.xlsx populated
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
-est_prop__AGE_T_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__AGE_T_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__AGE_T_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__AGE_T_by_all_tabn209_21_SASSxlsx.ster
-est_prop__AGE_T_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__AGE_T_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__AGE_T_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__AGE_T_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__AGE_T_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__AGE_T_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__AGE_T_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__AGE_T_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__Highest_degree_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__Highest_degree_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__Highest_degree_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__Highest_degree_by_all_tabn209_21_SASSxlsx.ster
-est_prop__Highest_degree_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__Highest_degree_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__Highest_degree_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__Highest_degree_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__Highest_degree_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__Highest_degree_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__Highest_degree_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__Highest_degree_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__RACETH_T_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__RACETH_T_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__RACETH_T_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__RACETH_T_by_all_tabn209_21_SASSxlsx.ster
-est_prop__RACETH_T_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__RACETH_T_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__RACETH_T_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__RACETH_T_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__RACETH_T_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__RACETH_T_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__RACETH_T_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__RACETH_T_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__S0285_S0287_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__S0285_S0287_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__S0285_S0287_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__S0285_S0287_by_all_tabn209_21_SASSxlsx.ster
-est_prop__S0285_S0287_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__S0285_S0287_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__S0285_S0287_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__S0285_S0287_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__S0285_S0287_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__S0285_S0287_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__S0285_S0287_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__S0285_S0287_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__T0104_rc_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__T0104_rc_by_all_tabn209_21_SASSxlsx.ster
-est_prop__T0104_rc_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__T0104_rc_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__T0104_rc_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__T0104_rc_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__T0104_rc_miss_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__T0104_rc_miss_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__T0104_rc_miss_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__T0104_rc_miss_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__T0104_rc_miss_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__T0104_rc_miss_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__T0356_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__T0356_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__T0356_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__T0356_by_all_tabn209_21_SASSxlsx.ster
-est_prop__T0356_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__T0356_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__T0356_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__T0356_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__T0356_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__T0356_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__T0356_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__T0356_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__TOTEXPER_rc_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__TOTEXPER_rc_by_all_tabn209_21_SASSxlsx.ster
-est_prop__TOTEXPER_rc_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__TOTEXPER_rc_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__TOTEXPER_rc_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__TOTEXPER_rc_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__TOTEXPER_rc_miss_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__TOTEXPER_rc_miss_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__TOTEXPER_rc_miss_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__TOTEXPER_rc_miss_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__TOTEXPER_rc_miss_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__TOTEXPER_rc_miss_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__URBANIC_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__URBANIC_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__URBANIC_by_all_tabn209_21_SASS_simplexlsx.ster
-est_prop__URBANIC_by_all_tabn209_21_SASSxlsx.ster
-est_prop__URBANIC_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__URBANIC_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__URBANIC_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__URBANIC_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__URBANIC_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__URBANIC_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__URBANIC_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__URBANIC_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__all_by_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__all_by_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__all_by_elementary_tabn209_21_SASS_simplexlsx.ster
-est_prop__all_by_elementary_tabn209_21_SASSxlsx.ster
-est_prop__all_by_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__all_by_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__all_by_secondary_tabn209_21_SASS_simplexlsx.ster
-est_prop__all_by_secondary_tabn209_21_SASSxlsx.ster
-est_prop__all_tabn209_21_SASS_SVYMIxlsx.ster
-est_prop__all_tabn209_21_SASS_simple_MIxlsx.ster
-est_prop__all_tabn209_21_SASS_simplexlsx.ster
-est_prop__all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_AGE_T_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_AGE_T_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_AGE_T_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_AGE_T_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_AGE_T_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_AGE_T_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_AGE_T_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_AGE_T_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_AGE_T_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_AGE_T_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_AGE_T_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_AGE_T_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_Highest_degree_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_Highest_degree_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_Highest_degree_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_Highest_degree_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_Highest_degree_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_Highest_degree_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_Highest_degree_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_Highest_degree_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_Highest_degree_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_Highest_degree_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_Highest_degree_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_Highest_degree_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_RACETH_T_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_RACETH_T_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_RACETH_T_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_RACETH_T_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_RACETH_T_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_RACETH_T_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_RACETH_T_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_RACETH_T_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_RACETH_T_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_RACETH_T_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_RACETH_T_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_RACETH_T_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_S0285_S0287_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_S0285_S0287_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_S0285_S0287_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_S0285_S0287_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_S0285_S0287_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_S0285_S0287_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_S0285_S0287_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_S0285_S0287_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_S0285_S0287_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_S0285_S0287_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_S0285_S0287_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_S0285_S0287_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_T0104_rc_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_T0104_rc_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_T0104_rc_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_T0104_rc_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_T0104_rc_miss_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_T0104_rc_miss_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_T0104_rc_miss_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_T0104_rc_miss_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_T0104_rc_miss_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_T0104_rc_miss_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_T0104_rc_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_T0104_rc_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_T0356_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_T0356_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_T0356_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_T0356_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_T0356_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_T0356_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_T0356_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_T0356_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_T0356_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_T0356_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_T0356_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_T0356_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_TOTEXPER_rc_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_TOTEXPER_rc_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_TOTEXPER_rc_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_TOTEXPER_rc_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_TOTEXPER_rc_miss_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_TOTEXPER_rc_miss_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_TOTEXPER_rc_miss_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_TOTEXPER_rc_miss_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_TOTEXPER_rc_miss_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_TOTEXPER_rc_miss_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_TOTEXPER_rc_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_TOTEXPER_rc_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_URBANIC_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_URBANIC_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_URBANIC_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_URBANIC_all_tabn209_21_SASSxlsx.ster
-est_total_cons_by_URBANIC_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_URBANIC_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_URBANIC_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_URBANIC_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_URBANIC_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_URBANIC_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_URBANIC_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_URBANIC_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_all_elementary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_all_elementary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_all_elementary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_all_elementary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_all_secondary_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_all_secondary_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_all_secondary_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_all_secondary_tabn209_21_SASSxlsx.ster
-est_total_cons_by_all_tabn209_21_SASS_SVYMIxlsx.ster
-est_total_cons_by_all_tabn209_21_SASS_simple_MIxlsx.ster
-est_total_cons_by_all_tabn209_21_SASS_simplexlsx.ster
-est_total_cons_by_all_tabn209_21_SASSxlsx.ster
-table_estimates_tabn209_21_SASS_SVYMIxlsx.dta
-table_estimates_tabn209_21_SASS_simple_MIxlsx.dta
-table_estimates_tabn209_21_SASS_simplexlsx.dta
-table_estimates_tabn209_21_SASSxlsx.dta
-tabn209_21_SASS_SVYMI_populated.xlsx
-tabn209_21_SASS_populated.xlsx
-tabn209_21_SASS_simple_MI_populated.xlsx
-tabn209_21_SASS_simple_populated.xlsx
+est_prop__AGE_T_by_all_shell_MIxlsx.ster
+est_prop__AGE_T_by_all_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_all_shell_SVYxlsx.ster
+est_prop__AGE_T_by_all_shellxlsx.ster
+est_prop__AGE_T_by_elementary_shell_MIxlsx.ster
+est_prop__AGE_T_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_elementary_shell_SVYxlsx.ster
+est_prop__AGE_T_by_elementary_shellxlsx.ster
+est_prop__AGE_T_by_secondary_shell_MIxlsx.ster
+est_prop__AGE_T_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_secondary_shell_SVYxlsx.ster
+est_prop__AGE_T_by_secondary_shellxlsx.ster
+est_prop__Highest_degree_by_all_shell_MIxlsx.ster
+est_prop__Highest_degree_by_all_shell_SVY_MIxlsx.ster
+est_prop__Highest_degree_by_all_shell_SVYxlsx.ster
+est_prop__Highest_degree_by_all_shellxlsx.ster
+est_prop__Highest_degree_by_elementary_shell_MIxlsx.ster
+est_prop__Highest_degree_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__Highest_degree_by_elementary_shell_SVYxlsx.ster
+est_prop__Highest_degree_by_elementary_shellxlsx.ster
+est_prop__Highest_degree_by_secondary_shell_MIxlsx.ster
+est_prop__Highest_degree_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__Highest_degree_by_secondary_shell_SVYxlsx.ster
+est_prop__Highest_degree_by_secondary_shellxlsx.ster
+est_prop__RACETH_T_by_all_shell_MIxlsx.ster
+est_prop__RACETH_T_by_all_shell_SVY_MIxlsx.ster
+est_prop__RACETH_T_by_all_shell_SVYxlsx.ster
+est_prop__RACETH_T_by_all_shellxlsx.ster
+est_prop__RACETH_T_by_elementary_shell_MIxlsx.ster
+est_prop__RACETH_T_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__RACETH_T_by_elementary_shell_SVYxlsx.ster
+est_prop__RACETH_T_by_elementary_shellxlsx.ster
+est_prop__RACETH_T_by_secondary_shell_MIxlsx.ster
+est_prop__RACETH_T_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__RACETH_T_by_secondary_shell_SVYxlsx.ster
+est_prop__RACETH_T_by_secondary_shellxlsx.ster
+est_prop__S0285_S0287_by_all_shell_MIxlsx.ster
+est_prop__S0285_S0287_by_all_shell_SVY_MIxlsx.ster
+est_prop__S0285_S0287_by_all_shell_SVYxlsx.ster
+est_prop__S0285_S0287_by_all_shellxlsx.ster
+est_prop__S0285_S0287_by_elementary_shell_MIxlsx.ster
+est_prop__S0285_S0287_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__S0285_S0287_by_elementary_shell_SVYxlsx.ster
+est_prop__S0285_S0287_by_elementary_shellxlsx.ster
+est_prop__S0285_S0287_by_secondary_shell_MIxlsx.ster
+est_prop__S0285_S0287_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__S0285_S0287_by_secondary_shell_SVYxlsx.ster
+est_prop__S0285_S0287_by_secondary_shellxlsx.ster
+est_prop__T0104_rc_by_all_shell_SVYxlsx.ster
+est_prop__T0104_rc_by_all_shellxlsx.ster
+est_prop__T0104_rc_by_elementary_shell_SVYxlsx.ster
+est_prop__T0104_rc_by_elementary_shellxlsx.ster
+est_prop__T0104_rc_by_secondary_shell_SVYxlsx.ster
+est_prop__T0104_rc_by_secondary_shellxlsx.ster
+est_prop__T0104_rc_miss_by_all_shell_MIxlsx.ster
+est_prop__T0104_rc_miss_by_all_shell_SVY_MIxlsx.ster
+est_prop__T0104_rc_miss_by_elementary_shell_MIxlsx.ster
+est_prop__T0104_rc_miss_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_all_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_all_shell_SVYxlsx.ster
+est_prop__AGE_T_by_all_shellxlsx.ster
+est_prop__AGE_T_by_elementary_shell_MIxlsx.ster
+est_prop__AGE_T_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_elementary_shell_SVYxlsx.ster
+est_prop__AGE_T_by_elementary_shellxlsx.ster
+est_prop__AGE_T_by_secondary_shell_MIxlsx.ster
+est_prop__AGE_T_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__AGE_T_by_secondary_shell_SVYxlsx.ster
+est_prop__AGE_T_by_secondary_shellxlsx.ster
+est_prop__Highest_degree_by_all_shell_MIxlsx.ster
+est_prop__Highest_degree_by_all_shell_SVY_MIxlsx.ster
+est_prop__Highest_degree_by_all_shell_SVYxlsx.ster
+est_prop__Highest_degree_by_all_shellxlsx.ster
+est_prop__Highest_degree_by_elementary_shell_MIxlsx.ster
+est_prop__Highest_degree_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__Highest_degree_by_elementary_shell_SVYxlsx.ster
+est_prop__Highest_degree_by_elementary_shellxlsx.ster
+est_prop__Highest_degree_by_secondary_shell_MIxlsx.ster
+est_prop__Highest_degree_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__Highest_degree_by_secondary_shell_SVYxlsx.ster
+est_prop__Highest_degree_by_secondary_shellxlsx.ster
+est_prop__RACETH_T_by_all_shell_MIxlsx.ster
+est_prop__RACETH_T_by_all_shell_SVY_MIxlsx.ster
+est_prop__RACETH_T_by_all_shell_SVYxlsx.ster
+est_prop__RACETH_T_by_all_shellxlsx.ster
+est_prop__RACETH_T_by_elementary_shell_MIxlsx.ster
+est_prop__RACETH_T_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__RACETH_T_by_elementary_shell_SVYxlsx.ster
+est_prop__RACETH_T_by_elementary_shellxlsx.ster
+est_prop__RACETH_T_by_secondary_shell_MIxlsx.ster
+est_prop__RACETH_T_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__RACETH_T_by_secondary_shell_SVYxlsx.ster
+est_prop__RACETH_T_by_secondary_shellxlsx.ster
+est_prop__S0285_S0287_by_all_shell_MIxlsx.ster
+est_prop__S0285_S0287_by_all_shell_SVY_MIxlsx.ster
+est_prop__S0285_S0287_by_all_shell_SVYxlsx.ster
+est_prop__S0285_S0287_by_all_shellxlsx.ster
+est_prop__S0285_S0287_by_elementary_shell_MIxlsx.ster
+est_prop__S0285_S0287_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__S0285_S0287_by_elementary_shell_SVYxlsx.ster
+est_prop__S0285_S0287_by_elementary_shellxlsx.ster
+est_prop__S0285_S0287_by_secondary_shell_MIxlsx.ster
+est_prop__S0285_S0287_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__S0285_S0287_by_secondary_shell_SVYxlsx.ster
+est_prop__S0285_S0287_by_secondary_shellxlsx.ster
+est_prop__T0104_rc_by_all_shell_SVYxlsx.ster
+est_prop__T0104_rc_by_all_shellxlsx.ster
+est_prop__T0104_rc_by_elementary_shell_SVYxlsx.ster
+est_prop__T0104_rc_by_elementary_shellxlsx.ster
+est_prop__T0104_rc_by_secondary_shell_SVYxlsx.ster
+est_prop__T0104_rc_by_secondary_shellxlsx.ster
+est_prop__T0104_rc_miss_by_all_shell_MIxlsx.ster
+est_prop__T0104_rc_miss_by_all_shell_SVY_MIxlsx.ster
+est_prop__T0104_rc_miss_by_elementary_shell_MIxlsx.ster
+est_prop__T0104_rc_miss_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__T0104_rc_miss_by_secondary_shell_MIxlsx.ster
+est_prop__T0104_rc_miss_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__T0356_by_all_shell_MIxlsx.ster
+est_prop__T0356_by_all_shell_SVY_MIxlsx.ster
+est_prop__T0356_by_all_shell_SVYxlsx.ster
+est_prop__T0356_by_all_shellxlsx.ster
+est_prop__T0356_by_elementary_shell_MIxlsx.ster
+est_prop__T0356_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__T0356_by_elementary_shell_SVYxlsx.ster
+est_prop__T0356_by_elementary_shellxlsx.ster
+est_prop__T0356_by_secondary_shell_MIxlsx.ster
+est_prop__T0356_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__T0356_by_secondary_shell_SVYxlsx.ster
+est_prop__T0356_by_secondary_shellxlsx.ster
+est_prop__TOTEXPER_rc_by_all_shell_SVYxlsx.ster
+est_prop__TOTEXPER_rc_by_all_shellxlsx.ster
+est_prop__TOTEXPER_rc_by_elementary_shell_SVYxlsx.ster
+est_prop__TOTEXPER_rc_by_elementary_shellxlsx.ster
+est_prop__TOTEXPER_rc_by_secondary_shell_SVYxlsx.ster
+est_prop__TOTEXPER_rc_by_secondary_shellxlsx.ster
+est_prop__TOTEXPER_rc_miss_by_all_shell_MIxlsx.ster
+est_prop__TOTEXPER_rc_miss_by_all_shell_SVY_MIxlsx.ster
+est_prop__TOTEXPER_rc_miss_by_elementary_shell_MIxlsx.ster
+est_prop__TOTEXPER_rc_miss_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__TOTEXPER_rc_miss_by_secondary_shell_MIxlsx.ster
+est_prop__TOTEXPER_rc_miss_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__URBANIC_by_all_shell_MIxlsx.ster
+est_prop__URBANIC_by_all_shell_SVY_MIxlsx.ster
+est_prop__URBANIC_by_all_shell_SVYxlsx.ster
+est_prop__URBANIC_by_all_shellxlsx.ster
+est_prop__URBANIC_by_elementary_shell_MIxlsx.ster
+est_prop__URBANIC_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__URBANIC_by_elementary_shell_SVYxlsx.ster
+est_prop__URBANIC_by_elementary_shellxlsx.ster
+est_prop__URBANIC_by_secondary_shell_MIxlsx.ster
+est_prop__URBANIC_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__URBANIC_by_secondary_shell_SVYxlsx.ster
+est_prop__URBANIC_by_secondary_shellxlsx.ster
+est_prop__all_by_elementary_shell_MIxlsx.ster
+est_prop__all_by_elementary_shell_SVY_MIxlsx.ster
+est_prop__all_by_elementary_shell_SVYxlsx.ster
+est_prop__all_by_elementary_shellxlsx.ster
+est_prop__all_by_secondary_shell_MIxlsx.ster
+est_prop__all_by_secondary_shell_SVY_MIxlsx.ster
+est_prop__all_by_secondary_shell_SVYxlsx.ster
+est_prop__all_by_secondary_shellxlsx.ster
+est_prop__all_shell_MIxlsx.ster
+est_prop__all_shell_SVY_MIxlsx.ster
+est_prop__all_shell_SVYxlsx.ster
+est_prop__all_shellxlsx.ster
+est_total_cons_by_AGE_T_all_shell_MIxlsx.ster
+est_total_cons_by_AGE_T_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_AGE_T_all_shell_SVYxlsx.ster
+est_total_cons_by_AGE_T_all_shellxlsx.ster
+est_total_cons_by_AGE_T_elementary_shell_MIxlsx.ster
+est_total_cons_by_AGE_T_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_AGE_T_elementary_shell_SVYxlsx.ster
+est_total_cons_by_AGE_T_elementary_shellxlsx.ster
+est_total_cons_by_AGE_T_secondary_shell_MIxlsx.ster
+est_total_cons_by_AGE_T_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_AGE_T_secondary_shell_SVYxlsx.ster
+est_total_cons_by_AGE_T_secondary_shellxlsx.ster
+est_total_cons_by_Highest_degree_all_shell_MIxlsx.ster
+est_total_cons_by_Highest_degree_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_Highest_degree_all_shell_SVYxlsx.ster
+est_total_cons_by_Highest_degree_all_shellxlsx.ster
+est_total_cons_by_Highest_degree_elementary_shell_MIxlsx.ster
+est_total_cons_by_Highest_degree_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_Highest_degree_elementary_shell_SVYxlsx.ster
+est_total_cons_by_Highest_degree_elementary_shellxlsx.ster
+est_total_cons_by_Highest_degree_secondary_shell_MIxlsx.ster
+est_total_cons_by_Highest_degree_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_Highest_degree_secondary_shell_SVYxlsx.ster
+est_total_cons_by_Highest_degree_secondary_shellxlsx.ster
+est_total_cons_by_RACETH_T_all_shell_MIxlsx.ster
+est_total_cons_by_RACETH_T_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_RACETH_T_all_shell_SVYxlsx.ster
+est_total_cons_by_RACETH_T_all_shellxlsx.ster
+est_total_cons_by_RACETH_T_elementary_shell_MIxlsx.ster
+est_total_cons_by_RACETH_T_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_RACETH_T_elementary_shell_SVYxlsx.ster
+est_total_cons_by_RACETH_T_elementary_shellxlsx.ster
+est_total_cons_by_RACETH_T_secondary_shell_MIxlsx.ster
+est_total_cons_by_RACETH_T_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_RACETH_T_secondary_shell_SVYxlsx.ster
+est_total_cons_by_RACETH_T_secondary_shellxlsx.ster
+est_total_cons_by_S0285_S0287_all_shell_MIxlsx.ster
+est_total_cons_by_S0285_S0287_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_S0285_S0287_all_shell_SVYxlsx.ster
+est_total_cons_by_S0285_S0287_all_shellxlsx.ster
+est_total_cons_by_S0285_S0287_elementary_shell_MIxlsx.ster
+est_total_cons_by_S0285_S0287_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_S0285_S0287_elementary_shell_SVYxlsx.ster
+est_total_cons_by_S0285_S0287_elementary_shellxlsx.ster
+est_total_cons_by_S0285_S0287_secondary_shell_MIxlsx.ster
+est_total_cons_by_S0285_S0287_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_S0285_S0287_secondary_shell_SVYxlsx.ster
+est_total_cons_by_S0285_S0287_secondary_shellxlsx.ster
+est_total_cons_by_T0104_rc_all_shell_SVYxlsx.ster
+est_total_cons_by_T0104_rc_all_shellxlsx.ster
+est_total_cons_by_T0104_rc_elementary_shell_SVYxlsx.ster
+est_total_cons_by_T0104_rc_elementary_shellxlsx.ster
+est_total_cons_by_T0104_rc_miss_all_shell_MIxlsx.ster
+est_total_cons_by_T0104_rc_miss_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_T0104_rc_miss_elementary_shell_MIxlsx.ster
+est_total_cons_by_T0104_rc_miss_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_T0104_rc_miss_secondary_shell_MIxlsx.ster
+est_total_cons_by_T0104_rc_miss_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_T0104_rc_secondary_shell_SVYxlsx.ster
+est_total_cons_by_T0104_rc_secondary_shellxlsx.ster
+est_total_cons_by_T0356_all_shell_MIxlsx.ster
+est_total_cons_by_T0356_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_T0356_all_shell_SVYxlsx.ster
+est_total_cons_by_T0356_all_shellxlsx.ster
+est_total_cons_by_T0356_elementary_shell_MIxlsx.ster
+est_total_cons_by_T0356_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_T0356_elementary_shell_SVYxlsx.ster
+est_total_cons_by_T0356_elementary_shellxlsx.ster
+est_total_cons_by_T0356_secondary_shell_MIxlsx.ster
+est_total_cons_by_T0356_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_T0356_secondary_shell_SVYxlsx.ster
+est_total_cons_by_T0356_secondary_shellxlsx.ster
+est_total_cons_by_TOTEXPER_rc_all_shell_SVYxlsx.ster
+est_total_cons_by_TOTEXPER_rc_all_shellxlsx.ster
+est_total_cons_by_TOTEXPER_rc_elementary_shell_SVYxlsx.ster
+est_total_cons_by_TOTEXPER_rc_elementary_shellxlsx.ster
+est_total_cons_by_TOTEXPER_rc_miss_all_shell_MIxlsx.ster
+est_total_cons_by_TOTEXPER_rc_miss_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_TOTEXPER_rc_miss_elementary_shell_MIxlsx.ster
+est_total_cons_by_TOTEXPER_rc_miss_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_TOTEXPER_rc_miss_secondary_shell_MIxlsx.ster
+est_total_cons_by_TOTEXPER_rc_miss_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_TOTEXPER_rc_secondary_shell_SVYxlsx.ster
+est_total_cons_by_TOTEXPER_rc_secondary_shellxlsx.ster
+est_total_cons_by_URBANIC_all_shell_MIxlsx.ster
+est_total_cons_by_URBANIC_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_URBANIC_all_shell_SVYxlsx.ster
+est_total_cons_by_URBANIC_all_shellxlsx.ster
+est_total_cons_by_URBANIC_elementary_shell_MIxlsx.ster
+est_total_cons_by_URBANIC_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_URBANIC_elementary_shell_SVYxlsx.ster
+est_total_cons_by_URBANIC_elementary_shellxlsx.ster
+est_total_cons_by_URBANIC_secondary_shell_MIxlsx.ster
+est_total_cons_by_URBANIC_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_URBANIC_secondary_shell_SVYxlsx.ster
+est_total_cons_by_URBANIC_secondary_shellxlsx.ster
+est_total_cons_by_all_elementary_shell_MIxlsx.ster
+est_total_cons_by_all_elementary_shell_SVY_MIxlsx.ster
+est_total_cons_by_all_elementary_shell_SVYxlsx.ster
+est_total_cons_by_all_elementary_shellxlsx.ster
+est_total_cons_by_all_secondary_shell_MIxlsx.ster
+est_total_cons_by_all_secondary_shell_SVY_MIxlsx.ster
+est_total_cons_by_all_secondary_shell_SVYxlsx.ster
+est_total_cons_by_all_secondary_shellxlsx.ster
+est_total_cons_by_all_shell_MIxlsx.ster
+est_total_cons_by_all_shell_SVY_MIxlsx.ster
+est_total_cons_by_all_shell_SVYxlsx.ster
+est_total_cons_by_all_shellxlsx.ster
+shell_MI_populated.xlsx
+shell_SVY_MI_populated.xlsx
+shell_SVY_populated.xlsx
+shell_populated.xlsx
+table_estimates_shell_MIxlsx.dta
+table_estimates_shell_SVY_MIxlsx.dta
+table_estimates_shell_SVYxlsx.dta
+table_estimates_shellxlsx.dta
 </pre>
 </div>
 </div>
