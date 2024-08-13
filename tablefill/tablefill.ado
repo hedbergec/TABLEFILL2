@@ -5,7 +5,7 @@ program tablefill
 		, /// start options
 		STATistics(string) /// what stat? allowed are "total(varlist)", "mean(varlist)", "proportion_col", "proportion" with a row (proportion of each row within column) or column option, "rate(varlist)", "median(varlist)", syntax total v , p(B) se(C) | mean z , p(D) se(E), 
 		Domainvars(varlist min = 1) /// variables that id rows and columns, need at least two
-		savefolder(string) /// folder to save estimation files
+		[savefolder(string)] /// folder to save estimation files
 		sheet(string) /// excel sheet
 		[restore] /// lookfor and restore old estimates
 		titlecell(string) title(string) ///
@@ -20,10 +20,10 @@ program tablefill
 
 	set type double
 
-	*store local tableshell filename
-	local tableshell "`using'"
-	local tableshellname = subinstr("`tableshell'",".","",.)
-	local tableshellname = subinstr("`tableshellname'","/","_",.)
+	tablefill_pathcleanup, path(`savefolder') shell(`using')
+	local tableshell = r(tableshell)
+	local tableshellname = r(tableshellname)
+    local savefolder_use = r(savefolder_use)
 
 	marksample touse
 
@@ -287,7 +287,7 @@ program tablefill
 	local svysettings = r(settings)
 
 	if r(settings) != ", clear" {
-		di as text "`micheck'survey settings detected..." 
+		di as text "`micheck'survey settings detected..." _continue
 		local svyprefix "svy, subpop(if `touse' == 1) : "
 		local if_postfix ""
 		if "`micheck'" != "" {
@@ -299,7 +299,7 @@ program tablefill
 		local svyprefix ""
 		local if_postfix "if `touse' == 1"
 	}
-	di _newline 
+	di "done." 
 	forvalues j = 1/`number_stats' {
 		if "`restore'" == "" di _newline "running `stat_`j'' commands"
 		foreach rowspec in `domain_rows' {
@@ -330,60 +330,60 @@ program tablefill
 				if regexm("`stat_`j''","prop") == 1 {
 					if `rowvarid' == `colvarid' {
 						if "`propway_`j''" == "col" {
-							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster"
+							capture confirm file "`savefolder_use'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`rowvarid'' < . `if_postfix'
 								quietly : `noisily' `miprefix' `svyprefix'  proportion `d_header_var_`rowvarid'' `if_postfix'
-								quietly : `noisily' estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
+								quietly : `noisily' estimates save "`savefolder_use'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
 							}
 						}
 						if "`propway_`j''" == "row" {
-							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster"
+							capture confirm file "`savefolder_use'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`colvarid'' < . `if_postfix'
 								quietly : `noisily' `miprefix' `svyprefix'  proportion `d_header_var_`colvarid'' `if_postfix'
-								quietly : `noisily' estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster", replace
+								quietly : `noisily' estimates save "`savefolder_use'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster", replace
 							}
 							
 						}
 					}
 					else {
 						if "`propway_`j''" == "col" {
-							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster"
+							capture confirm file "`savefolder_use'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`colvarid'' < . & `d_header_var_`rowvarid'' < . `if_postfix'
 								quietly : `noisily' `miprefix' `svyprefix'  proportion `d_header_var_`rowvarid'' `if_postfix', over(`d_header_var_`colvarid'')
-								quietly : `noisily' estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster", replace
+								quietly : `noisily' estimates save "`savefolder_use'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster", replace
 							}
 							
 						}
 						if "`propway_`j''" == "row" {
-							capture confirm file "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
+							capture confirm file "`savefolder_use'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
 							if _rc != 0 | "`restore'" == "" {
 								quietly : replace `run_use' = `d_header_var_`colvarid'' < . & `d_header_var_`rowvarid'' < . `if_postfix'
 								quietly : `noisily' `miprefix' `svyprefix'  proportion `d_header_var_`colvarid'' `if_postfix', over(`d_header_var_`rowvarid'')
-								quietly : `noisily' estimates save "`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
+								quietly : `noisily' estimates save "`savefolder_use'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
 							}
 						}
 					}
 				}
 				else {
 					if `rowvarid' == `colvarid' {
-						capture confirm file "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
+						capture confirm file "`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
 						if _rc != 0 | "`restore'" == "" {
 							quietly : replace `run_use' = `stat_var_`j'' < . & `d_header_var_`rowvarid'' < . `if_postfix'
 							
 							quietly : `noisily' `miprefix' `svyprefix'  `stat_`j'' `stat_var_`j'' `if_postfix' , over(`d_header_var_`rowvarid'') 
-							quietly : `noisily' estimates save "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
+							quietly : `noisily' estimates save "`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", replace
 						}
 						
 					}
 					else {
-						capture confirm file "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster"
+						capture confirm file "`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster"
 						if _rc != 0 | "`restore'" == "" {
 							quietly : replace `run_use' = `stat_var_`j'' < . & `d_header_var_`rowvarid'' < . & `d_header_var_`colvarid'' < . `if_postfix'
 							quietly : `noisily' `miprefix' `svyprefix'  `stat_`j'' `stat_var_`j'' `if_postfix' , over(`d_header_var_`rowvarid'' `d_header_var_`colvarid'') 
-							quietly : `noisily' estimates save "`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster", replace
+							quietly : `noisily' estimates save "`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster", replace
 						}
 					}
 				}
@@ -412,7 +412,7 @@ program tablefill
 					if `rowvarid' == `colvarid' {
 						if "`propway_`j''" == "col" {
 							quietly : tablefill_parse_estimates using ///
-								"`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster", `raw'  	///
+								"`savefolder_use'/est_prop_`propway'_`d_header_var_`rowvarid''_`tableshellname'.ster", `raw'  	///
 								bformat("`bformat_`j''") seformat("`seformat_`j''") factor(`factor_`j'') stat("`stat_`j''")
 							quietly : append using `estimates_file'
 							quietly : save `estimates_file', replace
@@ -420,7 +420,7 @@ program tablefill
 						}
 						if "`propway_`j''" == "row" {
 							quietly : tablefill_parse_estimates using ///
-								"`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster", `raw'   ///
+								"`savefolder_use'/est_prop_`propway'_`d_header_var_`colvarid''_`tableshellname'.ster", `raw'   ///
 								bformat("`bformat_`j''") seformat("`seformat_`j''") factor(`factor_`j'') stat("`stat_`j''")
 							quietly : append using `estimates_file'
 							quietly : save `estimates_file', replace
@@ -429,7 +429,7 @@ program tablefill
 					else {
 						if "`propway_`j''" == "col" {
 							quietly : tablefill_parse_estimates using ///
-								"`savefolder'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster", `raw'   ///
+								"`savefolder_use'/est_prop_`propway'_`d_header_var_`rowvarid''_by_`d_header_var_`colvarid''_`tableshellname'.ster", `raw'   ///
 								bformat("`bformat_`j''") seformat("`seformat_`j''") factor(`factor_`j'') stat("`stat_`j''")
 							quietly : append using `estimates_file'
 							quietly : save `estimates_file', replace
@@ -437,7 +437,7 @@ program tablefill
 						}
 						if "`propway_`j''" == "row" {
 							quietly : tablefill_parse_estimates using ///
-								"`savefolder'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", `raw'   ///
+								"`savefolder_use'/est_prop_`propway'_`d_header_var_`colvarid''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", `raw'   ///
 								bformat("`bformat_`j''") seformat("`seformat_`j''") factor(`factor_`j'') stat("`stat_`j''")
 							quietly : append using `estimates_file'
 							quietly : save `estimates_file', replace
@@ -447,7 +447,7 @@ program tablefill
 				else {
 					if `rowvarid' == `colvarid' {
 						quietly : tablefill_parse_estimates using ///
-							"`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", `raw'   ///
+							"`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster", `raw'   ///
 							bformat("`bformat_`j''") seformat("`seformat_`j''") factor(`factor_`j'') stat("`stat_`j''")
 						quietly : append using `estimates_file'
 						quietly : save `estimates_file', replace
@@ -455,7 +455,7 @@ program tablefill
 					}
 					else {
 						quietly : tablefill_parse_estimates using ///
-							"`savefolder'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster", `raw'   ///
+							"`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`d_header_var_`colvarid''_`tableshellname'.ster", `raw'   ///
 							bformat("`bformat_`j''") seformat("`seformat_`j''") factor(`factor_`j'') stat("`stat_`j''")
 						quietly : append using `estimates_file'
 						quietly : save `estimates_file', replace
@@ -472,9 +472,7 @@ program tablefill
 	quietly : gen se_col = ""
 	quietly : gen note_col = ""
 
-	foreach colspec in `domain_val_cols' {
 
-	}
 	quietly : `noisily' di "Row specs row:domainvarid:valueindex=variablevalue"
 	foreach rowspec in `domain_val_rows' {
 		tokenize "`rowspec'", parse("=")
@@ -511,14 +509,14 @@ program tablefill
 
 	**** Populate Shell
 
-	quietly : `noisily' save "`savefolder'/table_estimates_`tableshellname'.dta", replace
+	quietly : `noisily' save "`savefolder_use'/table_estimates_`tableshellname'.dta", replace
 
 	local populate_copy = regexr("`tableshell'","\.xls","_populated.xls")
 	local populate_copy = regexr("`populate_copy'","\/|\\","_")
 
-	quietly : `noisily'  copy "`tableshell'" "`savefolder'/`populate_copy'", replace 
+	quietly : `noisily'  copy "`tableshell'" "`savefolder_use'/`populate_copy'", replace 
 
-	quietly : `noisily' putexcel set "`savefolder'/`populate_copy'", sheet("`sheet'") modify
+	quietly : `noisily' putexcel set "`savefolder_use'/`populate_copy'", sheet("`sheet'") modify
 	quietly : levelsof row , local(rowlist) clean 
 	foreach r in `rowlist' {
 		foreach coltype in point se note {
@@ -538,7 +536,7 @@ program tablefill
 	}
 	quietly : `noisily' putexcel `titlecell' = `"`title'"'
 
-	di _newline "`savefolder'/`populate_copy' populated" 
+	di _newline "`savefolder_use'/`populate_copy' populated" 
 	
 	restore
 
