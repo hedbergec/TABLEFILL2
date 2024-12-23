@@ -368,6 +368,10 @@ program tablefill
 					}
 				}
 				else {
+					if regexm("`stat_`j''","sd|variance") == 1 {
+						di "still figuring out sd stuff"
+						exit 9
+					}
 					if `rowvarid' == `colvarid' {
 						capture confirm file "`savefolder_use'/est_`stat_`j''_`stat_var_`j''_by_`d_header_var_`rowvarid''_`tableshellname'.ster"
 						if _rc != 0 | "`restore'" == "" {
